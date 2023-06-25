@@ -1,0 +1,8 @@
+---
+- name: copy test file and update content
+  hosts: all
+  tasks:
+    - name: copy and update
+      copy:
+        content: "this is my testing node"
+        dest: /tmp/test.txt

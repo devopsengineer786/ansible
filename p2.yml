@@ -1,0 +1,22 @@
+---
+- name: copy test file and update content
+  hosts: all
+  tasks:
+    - name: copy and update
+      copy:
+        content: "this is my testing node"
+        dest: /tmp/test.txt
+    - name: install and configure 
+      yum:
+        name: httpd
+        state: present
+    - name: start and enabled 
+      service:
+        name: httpd
+        state: started
+        enabled: true
+    - name: RESTARTED HTTPD
+      service:
+        name: httpd
+        state: restarted
+      tags: test

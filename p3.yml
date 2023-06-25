@@ -1,0 +1,14 @@
+---
+- name: copy test file and update content
+  hosts: all
+  tasks:
+    - name: show my destr
+      command: httpd -v
+      register: xyz
+    - name: show output
+      debug:
+        var: xyz.stdout
+    - name: udate in motd file 
+      copy:
+        content: This is my kernel value {{ xyz.stdout }}
+        dest: /etc/motd
