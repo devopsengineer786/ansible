@@ -1,0 +1,23 @@
+---
+- name: install ans configure
+  hosts: all
+  vars:
+          app: http://workstation.example.com/AppStream
+          base: http://workstation.example.com/BaseOS
+  tasks:
+          - name: create repository in all node
+            yum_repository:
+                    name: soft
+                    description: AppStream
+                    baseurl: "{{ app }}" 
+                    enabled: true
+                    gpgcheck: false
+          - name: create repository in all node
+            yum_repository:
+                    name: BAseOS
+                    description: BaseOS
+                    baseurl: "{{ base }}"
+                    enabled: true
+                    gpgcheck: false
+
+            
