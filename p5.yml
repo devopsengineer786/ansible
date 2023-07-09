@@ -1,0 +1,33 @@
+---
+- name: install and create web page and update index file
+  hosts: all
+  vars_files:
+          - vir.yml
+  tasks:
+          - name: create "{{ web_ser }}" packages
+            yum:
+                    name: "{{ web_ser }}"
+                    state: latest
+          - name: start & enabled service "{{ web_ser }}"
+            service:
+                    name: "{{ web_ser }}"
+                    state: started 
+                    enabled: true
+          - name: enabled firewall service 
+            firewalld:
+                    service: http
+                    immediate: true
+                    permanent: true
+                    state: enabled
+          - name: create directory in html dir
+            file:
+                    path: /var/www/html/node1
+                    state: directory
+          - name: update index file
+            copy:
+                    content: "This is My Node1 server"
+                    dest: "{{ web_root }}/index.html"
+          - name: restarted httpd service 
+            service:
+                    name: "{{ web_ser }}"
+                    state: restarted
